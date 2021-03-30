@@ -54,7 +54,7 @@ BuildRequires: libopenssl-devel
 # end of distribution specific definitions
 
 %define main_version 1.16.1
-%define main_release 1%{?dist}.ngx
+%define main_release 1%{?dist}.cgx
 
 %define bdir %{_builddir}/%{name}-%{main_version}
 %define mdir $RPM_BUILD_DIR/nginx-%{version}/modules
