@@ -121,12 +121,14 @@ sed -e 's|%%DEFAULTSTART%%||g' -e 's|%%DEFAULTSTOP%%|0 1 2 3 4 5 6|g' \
     --with-cc-opt="%{WITH_CC_OPT}" \
     --with-ld-opt="%{WITH_LD_OPT}" \
     --with-debug
+make %{?_smp_mflags} modules
 make %{?_smp_mflags}
 %{__mv} %{bdir}/objs/nginx \
     %{bdir}/objs/nginx-debug
 ./configure %{BASE_CONFIGURE_ARGS} %{MODULE_CONFIGURE_ARGS} \
     --with-cc-opt="%{WITH_CC_OPT}" \
     --with-ld-opt="%{WITH_LD_OPT}"
+make %{?_smp_mflags} modules
 make %{?_smp_mflags}
 
 %install
@@ -166,6 +168,12 @@ cd $RPM_BUILD_ROOT%{_sysconfdir}/nginx && \
 
 %{__install} -p -D -m 0644 %{bdir}/objs/nginx.8 \
     $RPM_BUILD_ROOT%{_mandir}/man8/nginx.8
+
+%{__mkdir} -p $RPM_BUILD_ROOT%{_libdir}/nginx/modules
+for so in `find %{bdir}/objs/ -maxdepth 1 -type f -name "*.so"`; do
+%{__install} -m755 $so \
+   $RPM_BUILD_ROOT%{_libdir}/nginx/modules/
+done
 
 %if %{use_systemd}
 # install systemd-specific files
