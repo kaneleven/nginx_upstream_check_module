@@ -254,6 +254,7 @@ cat /dev/null > debugsourcefiles.list
 
 %attr(0755,root,root) %dir %{_libdir}/nginx
 %attr(0755,root,root) %dir %{_libdir}/nginx/modules
+%{_libdir}/nginx/modules/*
 %dir %{_datadir}/nginx
 %dir %{_datadir}/nginx/html
 %{_datadir}/nginx/html/*
